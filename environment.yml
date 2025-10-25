@@ -1,0 +1,4 @@
+name: conda_env
+channels:
+  - defaults
+prefix: /Users/akarenin/opt/anaconda3/envs/conda_env
