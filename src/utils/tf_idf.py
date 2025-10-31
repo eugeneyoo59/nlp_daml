@@ -7,7 +7,7 @@ def tf(term, doc):
     @return: term frequency (relative frequency) of term
     '''
 
-    if len(doc) = 0:
+    if len(doc) == 0:
         raise ValueError('cannot divide by zero')
     
     return doc.count(term) / len(doc)
@@ -39,5 +39,16 @@ def tf_idf(term, doc, docs):
     @return: tf * idf of word
     '''
 
-    return tf(term, doc) * idf(term, docs) 
+    return tf(term, doc) * idf(term, docs)
 
+
+def vectorize(doc, docs):
+    '''
+    @param doc: specific doc to vectorize, a list of words
+    @param docs: list of docs, each doc is a list of words
+    @return: dictionary mapping each unique word in docs to its tf-idf value in doc
+    '''
+
+    unique_terms = sorted(set(term for d in docs for term in d))
+
+    return {term: tf_idf(term, doc, docs) for term in unique_terms}
