@@ -1,4 +1,5 @@
 import math
+import numpy
 
 def tf(term, doc):
     '''
@@ -54,6 +55,8 @@ def vectorize(doc, docs):
     @param doc: specific doc to vectorize, a processed text of words
     @param docs: list of docs, each doc is a processed text of words
     @return: dictionary mapping each unique word in docs to its tf-idf value in doc
+
+    TODO: maybe replace dictionary with numpy array
     '''
 
     doc = doc
