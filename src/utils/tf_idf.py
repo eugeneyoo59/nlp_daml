@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 import math
 
 def tf(term, doc):
@@ -55,4 +52,3 @@ def vectorize(doc, docs):
     unique_terms = sorted(set(term for d in docs for term in d))
 
     return {term: tf_idf(term, doc, docs) for term in unique_terms}
->>>>>>> 61ecc11c5670a6244c438eed419d9b67fde6bc07
