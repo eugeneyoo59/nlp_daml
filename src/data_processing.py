@@ -15,7 +15,7 @@ stop_words = set(stopwords.words('english'))
 stemmer = PorterStemmer()
 lemmatizer = WordNetLemmatizer()
 
-def process_text(text):
+def preprocess_text(text):
     #to lower case
     text = text.lower() 
 
@@ -25,7 +25,7 @@ def process_text(text):
     #stopwords, stemming, lemmatization
     words = nltk.word_tokenize(text)
     words = [w for w in words if w not in stop_words]
-    words = [stemmer.stem(w) for w in words]
+    #words = [stemmer.stem(w) for w in words]
     words = [lemmatizer.lemmatize(w) for w in words]
     return ' '.join(words)
 
