@@ -44,24 +44,18 @@ def tf_idf(term, doc, docs):
     @return: tf * idf of word
     '''
 
-    doc = doc.split()
-    docs = [d.split() for d in docs]
-
     return tf(term, doc) * idf(term, docs)
 
 
-def vectorize(doc, docs):
+def tf_idf_vectorize(doc, docs):
     '''
     @param doc: specific doc to vectorize, a processed text of words
     @param docs: list of docs, each doc is a processed text of words
     @return: dictionary mapping each unique word in docs to its tf-idf value in doc
 
-    TODO: maybe replace dictionary with numpy array
+    TODO: maybe replace dictionary with numpy array (for consistency with text2vec.py)
     '''
 
-    doc = doc
-    docs = [d.split() for d in docs]
-
-    unique_terms = sorted(set(term for d in docs for term in d))
+    unique_terms = sorted(set(term for d in docs for term in d.split()))
 
     return {term: tf_idf(term, doc, docs) for term in unique_terms}

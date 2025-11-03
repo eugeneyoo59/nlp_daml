@@ -13,6 +13,10 @@ stemmer = PorterStemmer()
 lemmatizer = WordNetLemmatizer()
 
 def preprocess(text):
+    #error handling
+    if not isinstance(text, str):
+        return ''
+    
     #to lower case
     text = text.lower() 
 
