@@ -1,12 +1,12 @@
-from preprocessing import clean_text
 from td_idf import TFIDFVectorizer
+from preprocessing import preprocess
 
 class TFIDFFeatureEngineer:
     def init(self, max_features=5000):
         self.max_features = max_features
         self.vectorizer = TFIDFVectorizer(max_features=max_features)
     def clean(self, texts):
-        return [clean_text(t) for t in texts]
+        return [preprocess(t) for t in texts]
     def fit(self, texts):
         cleaned = self.clean(texts)
         return self.vectorizer.fit(cleaned)
