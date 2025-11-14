@@ -7,6 +7,12 @@ class TFIDFFeatureEngineer:
         self.vectorizer = TFIDFVectorizer(max_features=max_features)
     def clean(self, texts):
         return [clean_text(t) for t in texts]
-    def fit:
-    def transform:
-    def fit_transform:
+    def fit(self, texts):
+        cleaned = self.clean(texts)
+        return self.vectorizer.fit(cleaned)
+    def transform(self, texts):
+        cleaned = self.clean(texts)
+        return self.vectorizer.transform(cleaned)
+    def fit_transform(self, texts):
+        cleaned = self.clean(texts)
+        return self.vectorizer.fit_transform(cleaned)
