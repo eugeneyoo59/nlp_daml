@@ -4,7 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from tensorflow import keras
 from keras.models import Sequential
-from keras.layers import LSTM, Dense, Dropout
+from keras.layers import LSTM, Dense, Dropout, Masking
 from keras.utils import to_categorical
 
 from utils.text2vec import wv, word2vec
@@ -71,6 +71,7 @@ def train_lstm_on_df(
     embedding_dim = wv.vector_size
 
     model = Sequential()
+    model.add(Masking(mask_value=0., input_shape=(max_len, embedding_dim)))
     model.add(LSTM(units=128, input_shape=(max_len, embedding_dim)))
     model.add(Dropout(0.5))
     model.add(Dense(2, activation='softmax'))

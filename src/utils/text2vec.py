@@ -6,10 +6,14 @@ from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 # TODO: replace with actual model loading (common_texts is for testing)
 
 # load word2vec model
-wv_model = Word2Vec(sentences=common_texts, vector_size=100, window=5, min_count=1, workers=4)
-word_vectors = wv_model.wv
-word_vectors.save("word2vec.wordvectors")
-wv = KeyedVectors.load("word2vec.wordvectors", mmap='r')
+
+# # common texts for testing
+# wv_model = Word2Vec(sentences=common_texts, vector_size=100, window=5, min_count=1, workers=4)
+# word_vectors = wv_model.wv
+# word_vectors.save('word2vec.wordvectors')
+# wv = KeyedVectors.load('word2vec.wordvectors', mmap='r')
+
+wv = KeyedVectors.load('word2vec.wordvectors', mmap='r')
 
 # load doc2vec model
 documents = [TaggedDocument(doc, [i]) for i, doc in enumerate(common_texts)]
