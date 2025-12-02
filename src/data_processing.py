@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from utils.tf_idf import tf_idf_vectorize
 from utils.preprocessing import preprocess
+from src.models.lstm import train_lstm_on_df
 
 df = pd.read_csv("data/WELFake_Dataset.csv")
 df = df.rename(columns={"Unnamed: 0": "id", "text": "tokens"})
