@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from utils.tf_idf import tf_idf_vectorize
 from utils.preprocessing import preprocess
+from utils.occlusion import explain_example
+from utils.text2vec import wv, word2vec
 from models.lstm import train_lstm_on_df
 from gensim.models import Word2Vec
 
@@ -32,7 +34,15 @@ w2v_model.wv.save('word2vec.wordvectors')
 
 
 # train/test lstm
-model, history, (X_test, y_test_cat) = train_lstm_on_df(df)
+model, history, (X_test, y_test_cat, y_true, y_pred, y_pred_proba) = train_lstm_on_df(df)
+
+# occlusion test on first datapoint
+example_tokens = df.iloc[3]['tokens'].split()
+base_prob, top_tokens = explain_example(model, example_tokens, wv, word2vec, class_idx=0)
+
+print('fake probability:', base_prob)
+for tok, score in top_tokens:
+    print(tok, score)
 
 
 # ---------- tests ----------

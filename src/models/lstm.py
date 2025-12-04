@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix
 from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import LSTM, Dense, Dropout, Masking
@@ -35,13 +36,31 @@ def df_to_w2v_sequences(df: pd.DataFrame, max_len: int = 300):
     
     return X
 
+
+def evaluate_model(model, X_test, y_test_cat):
+    '''
+    compute core metrics and return predictions + probabilities
+    '''
+    y_pred_proba = model.predict(X_test)
+    y_pred = np.argmax(y_pred_proba, axis=1)
+    y_true = np.argmax(y_test_cat, axis=1)
+
+    print('classification report:')
+    print(classification_report(y_true, y_pred, digits=3))
+
+    print('confusion matrix:')
+    print(confusion_matrix(y_true, y_pred))
+
+    return y_true, y_pred, y_pred_proba
+
+
 def train_lstm_on_df(
         df: pd.DataFrame,
-        max_len: int = 300,
-        test_size: float = 0.2,
-        batch_size: int = 64,
-        epochs: int = 5,
-        random_state: int = 42
+        max_len: int=300,
+        test_size: float=0.2,
+        batch_size: int=64,
+        epochs: int=5,
+        random_state: int=42
 ):
     '''
     train lstm on dataframe with
@@ -93,7 +112,6 @@ def train_lstm_on_df(
     test_loss, test_acc = model.evaluate(X_test, y_test_cat, verbose=0)
     print(f'test loss: {test_loss:.4f}, test accuracy: {test_acc:.4f}')
 
-    return model, history, (X_test, y_test_cat)
+    y_true, y_pred, y_pred_proba = evaluate_model(model, X_test, y_test_cat)
 
-
-
+    return model, history, (X_test, y_test_cat, y_true, y_pred, y_pred_proba)
